@@ -17,32 +17,32 @@ public class LibraryController {
 
     private final LibraryDataBase libraryService;
 
-    @GetMapping()
-    public List<Book> getAllBooks() {
+    @GetMapping("/users/{username}/books")
+    public List<Book> getAllBooks(@PathVariable String username) {
         return libraryService.getAllBooks();
     }
 
-//    @RequestMapping(value = "/{bookId}", method = RequestMethod.GET)
-    @GetMapping("/{bookId}")
-    public Book getBookById(@PathVariable int bookId) {
+    //    @RequestMapping(value = "/{bookId}", method = RequestMethod.GET)
+    @GetMapping("/users/{username}/books/{bookId}")
+    public Book getBookById(@PathVariable String username, @PathVariable int bookId) {
         return libraryService.getBookById(bookId);
     }
 
-//    @RequestMapping(value = "/{bookId}", method = RequestMethod.DELETE)
-    @DeleteMapping("/{bookId}")
-    public void deleteBookById(@PathVariable int bookId) {
+    //    @RequestMapping(value = "/{bookId}", method = RequestMethod.DELETE)
+    @DeleteMapping("/users/{username}/books/{bookId}")
+    public void deleteBookById(@PathVariable String username, @PathVariable int bookId) {
         libraryService.deleteBookById(bookId);
     }
 
-//    @RequestMapping(value = "/{bookId}", method = RequestMethod.PUT)
-    @PutMapping("/{bookId}")
-    public void updateDescription(@PathVariable int bookId, @RequestBody Book book){
+    //    @RequestMapping(value = "/{bookId}", method = RequestMethod.PUT)
+    @PutMapping("/users/{username}/books/{bookId}")
+    public void updateDescription(@PathVariable String username, @PathVariable int bookId, @RequestBody Book book) {
         libraryService.updateBook(book);
     }
 
-    @PostMapping()
-   public Book createBook(@RequestBody Book book) throws AlreadyExistException {
-        Book createBook = libraryService.addBook(book.getDescription(),book.getTitle(),book.getAuthor(),book.getScore());
+    @PostMapping("/users/{username}/books")
+    public Book createBook(@RequestBody Book book) throws AlreadyExistException {
+        Book createBook = libraryService.addBook(book.getDescription(), book.getTitle(), book.getAuthor(), book.getScore());
         return createBook;
     }
 //    @PostMapping()
