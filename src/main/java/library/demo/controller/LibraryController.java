@@ -1,28 +1,30 @@
 package library.demo.controller;
 
 
+import library.demo.controller.Exceptions.AlreadyExistException;
 import library.demo.model.Book;
-import library.demo.service.LibraryDataBase;
+import library.demo.service.LibraryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
-@RequestMapping("/library")
+@RequestMapping("/books")
 public class LibraryController {
 
-
-    private final LibraryDataBase libraryService;
+    @Autowired
+    private LibraryService libraryService;
 
     @GetMapping()
-    public List<Book> getAllBooks() {
-        return libraryService.getAllBooks();
+    public ResponseEntity<List<Book>> getAllBooks() {
+        return new ResponseEntity<List<Book>>(libraryService.getAllBooks(), HttpStatus.OK);
     }
 
-//    @RequestMapping(value = "/{bookId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{bookId}", method = RequestMethod.GET)
     @GetMapping("/{bookId}")
     public Book getBookById(@PathVariable int bookId) {
         return libraryService.getBookById(bookId);
@@ -42,7 +44,7 @@ public class LibraryController {
 
     @PostMapping()
    public Book createBook(@RequestBody Book book) throws AlreadyExistException {
-        Book createBook = libraryService.addBook(book.getDescription(),book.getTitle(),book.getAuthor(),book.getScore());
+        Book createBook = libraryService.addBook(book.getKind(),book.getTitle(),book.getAuthor(),book.getCover(),book.getGenre());
         return createBook;
     }
 //    @PostMapping()

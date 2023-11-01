@@ -1,23 +1,24 @@
 package library.demo.service;
 
 
-import jakarta.annotation.PostConstruct;
 import library.demo.controller.Exceptions.AlreadyExistException;
 import library.demo.controller.Exceptions.NotFoundException;
 import library.demo.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class LibraryDataBase {
+public class LibraryService {
 
     private List<Book> libraryDataBase;
 
+    @Autowired
     private LibraryRepository libraryRepository;
+
+
 
     private int IdCount =0;
 //    @PostConstruct
@@ -39,7 +40,7 @@ public class LibraryDataBase {
     }
 
     public Book addBook(String kind, String title, String author,String cover, String genre) throws AlreadyExistException {
-        Book book = new Book(++IdCount,kind,title,author);
+        Book book = new Book(++IdCount,kind,title,author); // DO POPRAWY ZGODNIE Z KLASA BOOK
 
         Optional<Book> addBook = libraryDataBase.stream()
                 .filter(book1 -> book1.getId() == book.getId())
@@ -57,22 +58,22 @@ public class LibraryDataBase {
         return book;
     }
 
-//    public void addBook(Book book) throws AlreadyExistException {
-//        Optional<Book> addBookById = libraryDataBase.stream()
-//                .filter(book1 -> book1.getId() == book.getId())
-//                .findFirst();
-//        if(addBookById.isPresent()){
-//            throw new AlreadyExistException("book with that id already exist");
-//        }
-//
-//        libraryDataBase.add(book);
-//    }
+    public void addBook(Book book) throws AlreadyExistException {
+        Optional<Book> addBookById = libraryDataBase.stream()
+                .filter(book1 -> book1.getId() == book.getId())
+                .findFirst();
+        if(addBookById.isPresent()){
+            throw new AlreadyExistException("book with that id already exist");
+        }
+
+        libraryDataBase.add(book);
+    }
 
 
     public void deleteBookById(int bookId) {
         libraryDataBase.removeIf(book -> book.getId().equals(bookId) ); //zmiana na equals
     }
-
+//
     public void updateBook(Book book) {
         //For Title
         libraryDataBase.stream()

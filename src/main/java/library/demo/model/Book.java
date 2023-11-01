@@ -1,21 +1,55 @@
 package library.demo.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
-@Getter
-@Setter
+import java.util.List;
+
+
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Data
+@Document(collection = "books")
 public class Book {
-    private int id;
-    private String description,title,author;
-    private int score;
+//    private int id;
+    @Id
+    private ObjectId id;
+    private String kind;
+    private String fullSortKey;
+    private String title;
+    private String url;
+    private String coverColor;
+    private String author;
+    private String cover;
+    private String epoch;
+    private String href;
+    private boolean hasAudio;
+    private String genre;
+    private String simpleThumb;
+    private String slug;
+    private String coverThumb;
 
-    public Book(int i, Book book) {
+    @DocumentReference
+    private List<Review> reviews;
 
+    public Book(ObjectId id, String kind, String fullSortKey, String title, String url, String coverColor, String author, String cover, String epoch, String href, boolean hasAudio, String genre, String simpleThumb, String slug, String coverThumb) {
+        this.id = id;
+        this.kind = kind;
+        this.fullSortKey = fullSortKey;
+        this.title = title;
+        this.url = url;
+        this.coverColor = coverColor;
+        this.author = author;
+        this.cover = cover;
+        this.epoch = epoch;
+        this.href = href;
+        this.hasAudio = hasAudio;
+        this.genre = genre;
+        this.simpleThumb = simpleThumb;
+        this.slug = slug;
+        this.coverThumb = coverThumb;
     }
 }

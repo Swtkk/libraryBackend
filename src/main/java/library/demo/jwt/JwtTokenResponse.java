@@ -1,4 +1,4 @@
-package library.demo.jwt;
-
-public record JwtTokenResponse(String token) {
-}
+//package library.demo.jwt;
+//
+//public record JwtTokenResponse(String token) {
+//}

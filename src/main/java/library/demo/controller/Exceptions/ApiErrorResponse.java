@@ -1,4 +1,4 @@
-package library.demo.controller;
+package library.demo.controller.Exceptions;
 
 import lombok.*;
 
