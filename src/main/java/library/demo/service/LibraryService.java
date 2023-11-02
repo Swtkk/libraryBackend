@@ -4,7 +4,11 @@ package library.demo.service;
 import library.demo.controller.Exceptions.AlreadyExistException;
 import library.demo.controller.Exceptions.NotFoundException;
 import library.demo.model.Book;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,74 +17,68 @@ import java.util.Optional;
 @Service
 public class LibraryService {
 
-    private List<Book> libraryDataBase;
+
 
     @Autowired
     private LibraryRepository libraryRepository;
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
-
-
-    private int IdCount =0;
-//    @PostConstruct
-//    public void loadData() {
-//        libraryDataBase = new ArrayList<>();
-//        libraryDataBase.add(new Book(++IdCount, "Little description", "Title of Book", "Author"));
-//        libraryDataBase.add(new Book(++IdCount, "A big short description", "Book of Authorization", "Very big fish"));
-//    }
 
     public List<Book> getAllBooks() {
         return libraryRepository.findAll();
     }
 
-    public Book getBookById(int bookId) {
-        return libraryDataBase.stream()
-                .filter(book -> book.getId().equals(bookId)) // zmiana na equals
-                .findFirst()
-                .orElseThrow(() -> new NotFoundException("not Found" + bookId));
+
+    public Book getBookById(ObjectId bookId) {
+        Query query = new Query(Criteria.where("_id").is(bookId));
+        Book book = mongoTemplate.findOne(query, Book.class);
+        if(book==null){
+            throw new NotFoundException("not found "+bookId);
+        }
+    return book;
     }
 
-    public Book addBook(String kind, String title, String author,String cover, String genre) throws AlreadyExistException {
-        Book book = new Book(++IdCount,kind,title,author); // DO POPRAWY ZGODNIE Z KLASA BOOK
-
-        Optional<Book> addBook = libraryDataBase.stream()
-                .filter(book1 -> book1.getId() == book.getId())
-                .findFirst();
-        Optional<Book> addBookTitle = libraryDataBase.stream()
-                .filter(book1 -> book1.getTitle().equals(title))
-                .findFirst();
-        if(addBook.isPresent()){
-            throw new AlreadyExistException("Book with that id already exist");
-        }
-        if(addBookTitle.isPresent()){
+    public Book addBook(String kind, String title, String author,String cover,String epoch,boolean hasAudio, String genre) throws AlreadyExistException {
+        if(libraryRepository.findByTitle(title) != null){
             throw new AlreadyExistException("Book with that title already exist");
         }
-        libraryDataBase.add(book);
-        return book;
+        ObjectId objectId = new ObjectId();
+        Book book = new Book();
+            book.setId(objectId);
+            book.setKind(kind);
+            book.setTitle(title);
+            book.setAuthor(author);
+            book.setCover(cover);
+            book.setEpoch(epoch);
+            book.setHasAudio(hasAudio);
+            book.setGenre(genre);
+        Book savedBook = libraryRepository.save(book);
+
+        return savedBook;
     }
 
-    public void addBook(Book book) throws AlreadyExistException {
-        Optional<Book> addBookById = libraryDataBase.stream()
-                .filter(book1 -> book1.getId() == book.getId())
-                .findFirst();
-        if(addBookById.isPresent()){
-            throw new AlreadyExistException("book with that id already exist");
-        }
 
-        libraryDataBase.add(book);
-    }
-
-
-    public void deleteBookById(int bookId) {
-        libraryDataBase.removeIf(book -> book.getId().equals(bookId) ); //zmiana na equals
+    public void deleteBookById(ObjectId bookId) {
+        Book bookToDelete = libraryRepository.findById(bookId).orElseThrow(()-> new NotFoundException("Book with id "+bookId + " not found"));
+        libraryRepository.delete(bookToDelete);
     }
 //
-    public void updateBook(Book book) {
-        //For Title
-        libraryDataBase.stream()
-                // Or title.getTitle() == book.getTitle()
-                .filter(title -> title.getId() == book.getId())
-                .forEach(title -> title.setTitle(book.getTitle()));
+    public void updateBook(ObjectId bookId,Book book) {
+        Optional<Book> existingBook= libraryRepository.findById(bookId);
 
+        if(existingBook.isPresent()){
+            Book bookToUpdate = existingBook.get();
+            bookToUpdate.setKind(book.getKind());
+            bookToUpdate.setTitle(book.getTitle());
+            bookToUpdate.setAuthor(book.getAuthor());
+            bookToUpdate.setCover(book.getCover());
+            bookToUpdate.setEpoch(book.getEpoch());
+            bookToUpdate.setHasAudio(book.isHasAudio());
+            bookToUpdate.setGenre(book.getGenre());
+
+            libraryRepository.save(bookToUpdate);
+        }
     }
 
 

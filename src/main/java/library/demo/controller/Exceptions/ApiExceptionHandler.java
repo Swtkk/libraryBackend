@@ -14,7 +14,7 @@ public class ApiExceptionHandler {
     public ResponseEntity<ApiErrorResponse> handleException(NotFoundException e) {
         ApiErrorResponse err = ApiErrorResponse.builder()
                 .status(HttpStatus.NOT_FOUND.value())
-                .message("123")
+                .message(e.getMessage())
                 .timestamp(System.currentTimeMillis())
                 .build();
 

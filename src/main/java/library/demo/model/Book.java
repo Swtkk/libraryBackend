@@ -3,6 +3,7 @@ package library.demo.model;
 import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
@@ -19,6 +20,7 @@ public class Book {
     private ObjectId id;
     private String kind;
     private String fullSortKey;
+    @Indexed(unique = true)
     private String title;
     private String url;
     private String coverColor;
@@ -35,21 +37,21 @@ public class Book {
     @DocumentReference
     private List<Review> reviews;
 
-    public Book(ObjectId id, String kind, String fullSortKey, String title, String url, String coverColor, String author, String cover, String epoch, String href, boolean hasAudio, String genre, String simpleThumb, String slug, String coverThumb) {
+    public Book(ObjectId id, String kind, String title, String author, String cover, String epoch, boolean hasAudio, String genre) {
         this.id = id;
         this.kind = kind;
-        this.fullSortKey = fullSortKey;
+//        this.fullSortKey = fullSortKey;
         this.title = title;
-        this.url = url;
-        this.coverColor = coverColor;
+//        this.url = url;
+//        this.coverColor = coverColor;
         this.author = author;
         this.cover = cover;
         this.epoch = epoch;
-        this.href = href;
+//        this.href = href;
         this.hasAudio = hasAudio;
         this.genre = genre;
-        this.simpleThumb = simpleThumb;
-        this.slug = slug;
-        this.coverThumb = coverThumb;
+//        this.simpleThumb = simpleThumb;
+//        this.slug = slug;
+//        this.coverThumb = coverThumb;
     }
 }
