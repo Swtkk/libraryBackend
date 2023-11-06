@@ -70,7 +70,7 @@
 //    @Bean
 //    public UserDetailsService userDetailsService() {
 //        UserDetails user = User.withUsername("marcin")
-//                .password("123")
+//                .password("{noop}123")
 //                .authorities("read")
 //                .roles("USER")
 //                .build();
