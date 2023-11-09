@@ -30,7 +30,12 @@ public class LibraryService {
     }
 
 
+<<<<<<< HEAD
     public Book getBookById(ObjectId bookId) {
+=======
+    public Book getBookById(String bookId) {
+
+>>>>>>> third-branch
         Query query = new Query(Criteria.where("_id").is(bookId));
         Book book = mongoTemplate.findOne(query, Book.class);
         if(book==null){
@@ -39,13 +44,23 @@ public class LibraryService {
     return book;
     }
 
+<<<<<<< HEAD
     public Book addBook(String kind, String title, String author,String cover,String epoch,boolean hasAudio, String genre) throws AlreadyExistException {
+=======
+    public Book addBook(String kind, String title, String author,String cover,String epoch,boolean hasAudio, String genre,String simpleThumb) throws AlreadyExistException {
+>>>>>>> third-branch
         if(libraryRepository.findByTitle(title) != null){
             throw new AlreadyExistException("Book with that title already exist");
         }
         ObjectId objectId = new ObjectId();
+<<<<<<< HEAD
         Book book = new Book();
             book.setId(objectId);
+=======
+        String stringId = objectId.toHexString();
+        Book book = new Book();
+            book.setId(stringId);
+>>>>>>> third-branch
             book.setKind(kind);
             book.setTitle(title);
             book.setAuthor(author);
@@ -53,6 +68,10 @@ public class LibraryService {
             book.setEpoch(epoch);
             book.setHasAudio(hasAudio);
             book.setGenre(genre);
+<<<<<<< HEAD
+=======
+            book.setSimpleThumb(simpleThumb);
+>>>>>>> third-branch
         Book savedBook = libraryRepository.save(book);
 
         return savedBook;
@@ -76,7 +95,11 @@ public class LibraryService {
             bookToUpdate.setEpoch(book.getEpoch());
             bookToUpdate.setHasAudio(book.isHasAudio());
             bookToUpdate.setGenre(book.getGenre());
+<<<<<<< HEAD
 
+=======
+            bookToUpdate.setSimpleThumb(book.getSimpleThumb());
+>>>>>>> third-branch
             libraryRepository.save(bookToUpdate);
         }
     }

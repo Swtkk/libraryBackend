@@ -24,7 +24,10 @@ public class LibraryController {
     @Autowired
     private LibraryService libraryService;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> third-branch
     @GetMapping()
     public ResponseEntity<List<Book>> getAllBooks() {
         return new ResponseEntity<List<Book>>(libraryService.getAllBooks(), HttpStatus.OK);
@@ -32,7 +35,11 @@ public class LibraryController {
 
 //    @RequestMapping(value = "/{bookId}", method = RequestMethod.GET)
     @GetMapping("/{bookId}")
+<<<<<<< HEAD
     public Book getBookById(@PathVariable ObjectId bookId) {
+=======
+    public Book getBookById(@PathVariable String bookId) {
+>>>>>>> third-branch
 
         return libraryService.getBookById(bookId);
     }
@@ -51,7 +58,11 @@ public class LibraryController {
 
     @PostMapping()
    public Book createBook( @RequestBody Book book) throws AlreadyExistException {
+<<<<<<< HEAD
         return libraryService.addBook(book.getKind(),book.getTitle(),book.getAuthor(),book.getCover(),book.getEpoch(),book.isHasAudio(),book.getGenre());
+=======
+        return libraryService.addBook(book.getKind(),book.getTitle(),book.getAuthor(),book.getCover(),book.getEpoch(),book.isHasAudio(),book.getGenre(),book.getSimpleThumb());
+>>>>>>> third-branch
     }
 //    @PostMapping()
 //    public void addBook(@RequestBody Book book) throws AlreadyExistException {
