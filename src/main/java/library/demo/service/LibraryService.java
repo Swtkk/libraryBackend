@@ -30,7 +30,7 @@ public class LibraryService {
     }
 
 
-    public Book getBookById(ObjectId bookId) {
+    public Book getBookById(String bookId) {
 
         Query query = new Query(Criteria.where("_id").is(bookId));
         Book book = mongoTemplate.findOne(query, Book.class);
@@ -45,8 +45,9 @@ public class LibraryService {
             throw new AlreadyExistException("Book with that title already exist");
         }
         ObjectId objectId = new ObjectId();
+        String stringId = objectId.toHexString();
         Book book = new Book();
-            book.setId(objectId);
+            book.setId(stringId);
             book.setKind(kind);
             book.setTitle(title);
             book.setAuthor(author);

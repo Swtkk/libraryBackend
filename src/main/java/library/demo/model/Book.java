@@ -18,7 +18,9 @@ import java.util.List;
 public class Book {
 //    private int id;
     @Id
-    private ObjectId id;
+    private String id;
+
+    private String name;
     private String kind;
     private String fullSortKey;
     @Indexed(unique = true)
@@ -40,7 +42,7 @@ public class Book {
     private List<Review> reviews;
 
     public Book(ObjectId id, String kind, String title, String author, String cover, String epoch, boolean hasAudio, String genre,String simpleThumb) {
-        this.id = id;
+        this.id = id.toHexString();
         this.kind = kind;
 //        this.fullSortKey = fullSortKey;
         this.title = title;

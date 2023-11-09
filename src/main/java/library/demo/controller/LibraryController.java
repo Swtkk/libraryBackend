@@ -31,7 +31,7 @@ public class LibraryController {
 
 //    @RequestMapping(value = "/{bookId}", method = RequestMethod.GET)
     @GetMapping("/{bookId}")
-    public Book getBookById(@PathVariable ObjectId bookId) {
+    public Book getBookById(@PathVariable String bookId) {
 
         return libraryService.getBookById(bookId);
     }
