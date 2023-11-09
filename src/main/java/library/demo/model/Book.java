@@ -51,13 +51,10 @@ public class Book {
     @DocumentReference
     private List<Review> reviews;
 
-<<<<<<< HEAD
     public Book(ObjectId id, String kind, String title, String author, String cover, String epoch, boolean hasAudio, String genre) {
         this.id = id;
-=======
     public Book(ObjectId id, String kind, String title, String author, String cover, String epoch, boolean hasAudio, String genre,String simpleThumb) {
         this.id = id.toHexString();
->>>>>>> third-branch
         this.kind = kind;
 //        this.fullSortKey = fullSortKey;
         this.title = title;
@@ -69,11 +66,8 @@ public class Book {
 //        this.href = href;
         this.hasAudio = hasAudio;
         this.genre = genre;
-<<<<<<< HEAD
 //        this.simpleThumb = simpleThumb;
-=======
         this.simpleThumb = simpleThumb;
->>>>>>> third-branch
 //        this.slug = slug;
 //        this.coverThumb = coverThumb;
     }
