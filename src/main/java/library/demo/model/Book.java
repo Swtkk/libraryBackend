@@ -6,10 +6,10 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
-<<<<<<< HEAD
-=======
+
+
 import org.springframework.data.mongodb.core.mapping.Field;
->>>>>>> third-branch
+
 
 import java.util.List;
 
@@ -21,13 +21,10 @@ import java.util.List;
 public class Book {
 //    private int id;
     @Id
-<<<<<<< HEAD
-    private ObjectId id;
-=======
     private String id;
 
     private String name;
->>>>>>> third-branch
+
     private String kind;
     private String fullSortKey;
     @Indexed(unique = true)
@@ -40,10 +37,9 @@ public class Book {
     private String href;
     private boolean hasAudio;
     private String genre;
-<<<<<<< HEAD
-=======
+
     @Field("simple_thumb")
->>>>>>> third-branch
+
     private String simpleThumb;
     private String slug;
     private String coverThumb;
@@ -51,8 +47,7 @@ public class Book {
     @DocumentReference
     private List<Review> reviews;
 
-    public Book(ObjectId id, String kind, String title, String author, String cover, String epoch, boolean hasAudio, String genre) {
-        this.id = id;
+
     public Book(ObjectId id, String kind, String title, String author, String cover, String epoch, boolean hasAudio, String genre,String simpleThumb) {
         this.id = id.toHexString();
         this.kind = kind;
