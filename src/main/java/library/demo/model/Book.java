@@ -19,7 +19,7 @@ import java.util.List;
 @Data
 @Document(collection = "books")
 public class Book {
-//    private int id;
+    //    private int id;
     @Id
     private String id;
 
@@ -39,7 +39,6 @@ public class Book {
     private String genre;
 
     @Field("simple_thumb")
-
     private String simpleThumb;
     private String slug;
     private String coverThumb;
@@ -48,7 +47,7 @@ public class Book {
     private List<Review> reviews;
 
 
-    public Book(ObjectId id, String kind, String title, String author, String cover, String epoch, boolean hasAudio, String genre,String simpleThumb) {
+    public Book(ObjectId id, String kind, String title, String author, String cover, String epoch, boolean hasAudio, String genre, String simpleThumb) {
         this.id = id.toHexString();
         this.kind = kind;
 //        this.fullSortKey = fullSortKey;
