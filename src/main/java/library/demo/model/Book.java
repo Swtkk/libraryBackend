@@ -23,8 +23,6 @@ public class Book {
     @Id
     private String id;
 
-    private String name;
-
     private String kind;
     private String fullSortKey;
     @Indexed(unique = true)

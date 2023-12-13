@@ -91,6 +91,10 @@ public class LibraryService {
     }
 
 
+    public List<Book> searchBooksByTitle(String title) {
+        Query query = new Query(Criteria.where("title").regex(title, "i"));
+        return mongoTemplate.find(query, Book.class);
+    }
 }
 
 

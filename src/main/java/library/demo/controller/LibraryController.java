@@ -54,9 +54,11 @@ public class LibraryController {
         return libraryService.addBook(book.getKind(),book.getTitle(),book.getAuthor(),book.getCover(),book.getEpoch(),book.isHasAudio(),book.getGenre(),book.getSimpleThumb());
 
     }
-//    @PostMapping()
-//    public void addBook(@RequestBody Book book) throws AlreadyExistException {
-//        libraryService.addBook(book);
-//    }
 
+    //wyszukiwanie po tytule
+    @GetMapping("/search")
+    public ResponseEntity<List<Book>> searchByTitle(@RequestParam String title){
+        List<Book> books = libraryService.searchBooksByTitle(title);
+        return new ResponseEntity<>(books, HttpStatus.OK);
+    }
 }
