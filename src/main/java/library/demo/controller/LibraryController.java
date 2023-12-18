@@ -61,4 +61,9 @@ public class LibraryController {
         List<Book> books = libraryService.searchBooksByTitle(title);
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
+    @GetMapping("/kind")
+    public ResponseEntity<List<Book>> searchByKind(@RequestParam String kind){
+        List<Book> books = libraryService.searchByKind(kind);
+        return new ResponseEntity<>(books, HttpStatus.OK);
+    }
 }
