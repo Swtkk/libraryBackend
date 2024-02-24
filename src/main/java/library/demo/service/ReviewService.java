@@ -6,22 +6,30 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.Date;
 
 @Service
 public class ReviewService {
     @Autowired
-    private  ReviewRepository reviewRepository;
+    private ReviewRepository reviewRepository;
     @Autowired
     private MongoTemplate mongoTemplate;
-    public Review createReview(String reviewBody, ObjectId id){//byc moze powinno byc ObjectId
-        Review review = reviewRepository.insert(new Review(reviewBody));
 
-        mongoTemplate.update(Book.class)
-                .matching(Criteria.where("_id").is(id))
-                .apply(new Update().push("reviews").value(review))
-                .first();
+
+    public Review addReviewToBook(Review review, ObjectId id) {//byc moze powinno byc ObjectId
+        review.setDate(LocalDate.now());
+        review = reviewRepository.insert(review);
+        mongoTemplate.updateFirst(
+                Query.query(Criteria.where("_id").is(id)),
+                new Update().push("reviews", review),
+                Book.class);
+
         return review;
     }
+
 }
