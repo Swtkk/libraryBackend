@@ -46,6 +46,15 @@ public class LibraryService {
     return book;
     }
 
+    public List<Review> getReviewsForBook(String bookId){
+        Optional<Book> book = libraryRepository.findById(new ObjectId(bookId));
+
+        if(book.isPresent()){
+            return book.get().getReviews();
+        }else {
+            throw new NotFoundException("not found "+bookId);
+        }
+    }
 
     public Book addBook(String kind, String title, String author,String cover,String epoch,boolean hasAudio, String genre,String simpleThumb) throws AlreadyExistException {
         if(libraryRepository.findByTitle(title) != null){

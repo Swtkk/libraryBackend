@@ -20,10 +20,14 @@ public class Review {
 
     private String body;
     private LocalDate date;
+    private String userEmail;
+    private String bookId;
 
-    public Review(String body, LocalDate date) {
+    public Review(String body, LocalDate date, String userEmail, String bookId) {
         this.body = body;
         this.date = LocalDate.now();
+        this.userEmail = userEmail;
+        this.bookId = bookId;
     }
 
 

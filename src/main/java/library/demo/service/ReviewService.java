@@ -1,5 +1,6 @@
 package library.demo.service;
 
+import library.demo.controller.Exceptions.NotFoundException;
 import library.demo.model.Book;
 import library.demo.model.Review;
 import org.bson.types.ObjectId;
@@ -8,6 +9,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -21,7 +23,7 @@ public class ReviewService {
     private MongoTemplate mongoTemplate;
 
 
-    public Review addReviewToBook(Review review, ObjectId id) {//byc moze powinno byc ObjectId
+    public Review addReviewToBook(Review review, ObjectId id) {
         review.setDate(LocalDate.now());
         review = reviewRepository.insert(review);
         mongoTemplate.updateFirst(
@@ -31,5 +33,6 @@ public class ReviewService {
 
         return review;
     }
+
 
 }
