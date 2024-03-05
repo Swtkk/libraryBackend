@@ -22,7 +22,7 @@ public class CreateUserService {
 
         User user = new User();
             user.setId(stringId);
-            user.setName(name);
+            user.setEmail(name);
             user.setPassword(password);
 
         User saveUser = userRepository.save(user);

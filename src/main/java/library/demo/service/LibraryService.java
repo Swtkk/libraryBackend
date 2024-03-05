@@ -35,7 +35,6 @@ public class LibraryService {
     }
 
 
-
     public Book getBookById(String bookId) {
 
         Query query = new Query(Criteria.where("_id").is(bookId));

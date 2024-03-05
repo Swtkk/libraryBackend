@@ -1,16 +1,13 @@
 package library.demo.model;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
-
-
 import org.springframework.data.mongodb.core.mapping.Field;
-
-
 import java.util.List;
 
 
@@ -22,10 +19,10 @@ public class Book {
     //    private int id;
     @Id
     private String id;
-
     private String kind;
     private String fullSortKey;
     @Indexed(unique = true)
+    @NotNull
     private String title;
     private String url;
     private String coverColor;
