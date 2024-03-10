@@ -5,11 +5,13 @@ import library.demo.controller.Exceptions.AlreadyExistException;
 import library.demo.controller.Exceptions.NotFoundException;
 import library.demo.model.Book;
 import library.demo.model.Review;
+import library.demo.model.UserEntity;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -20,20 +22,14 @@ import java.util.Optional;
 @Service
 public class LibraryService {
 
-
-
     @Autowired
     private LibraryRepository libraryRepository;
     @Autowired
     private MongoTemplate mongoTemplate;
 
-
-
-
     public List<Book> getAllBooks() {
         return libraryRepository.findAll();
     }
-
 
     public Book getBookById(String bookId) {
 
@@ -54,7 +50,13 @@ public class LibraryService {
             throw new NotFoundException("not found "+bookId);
         }
     }
+    public void addBookToUser(ObjectId userId, Book book){
+        mongoTemplate.updateFirst(
+                Query.query(Criteria.where("_id").is(userId)),
+                new Update().push("myFavorite", book), UserEntity.class
+        );
 
+    }
     public Book addBook(String kind, String title, String author,String cover,String epoch,boolean hasAudio, String genre,String simpleThumb) throws AlreadyExistException {
         if(libraryRepository.findByTitle(title) != null){
             throw new AlreadyExistException("Book with that title already exist");

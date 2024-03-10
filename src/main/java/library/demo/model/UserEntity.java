@@ -7,15 +7,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Document(collection = "users")
-public class UserEntity {
+public class UserEntity implements UserDetails {
     @Id
     private String id;
     @NotNull(message = "Pole nie moze byc puste")
@@ -28,6 +32,34 @@ public class UserEntity {
     private String password;
     private String roles;
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return java.util.List.of(new SimpleGrantedAuthority(roles));
+    }
 
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
 }

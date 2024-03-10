@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -19,14 +20,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     private CreateUserRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user = userRepository.findByEmail(username).orElseThrow(()-> new UsernameNotFoundException("User not found"));
-        return new User(user.getEmail(), user.getPassword(), mapRolesToauthorities(user.getRoles()));
+        return userRepository.findByEmail(username).orElseThrow();
     }
 
-    private Collection<GrantedAuthority> mapRolesToauthorities(String roles) {
-        return Arrays.stream(roles.split(","))
-                .map(String::trim) // Usuwa białe znaki z każdej roli
-                .map(role -> new SimpleGrantedAuthority(role))
-                .collect(Collectors.toList());
-    }
 }
