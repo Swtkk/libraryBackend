@@ -41,11 +41,11 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request.requestMatchers("/public/**", "/register", "/login").permitAll()
                                 .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
-                                .requestMatchers("/user/**").hasAnyAuthority("USER")
-                                .requestMatchers("/adminuser/**").hasAnyAuthority("USER", "ADMIN")
+                                .requestMatchers("/user/**").hasAnyAuthority("USER", "ADMIN")
                                 .anyRequest()
                                 .authenticated()
                 )
+                .cors(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
                         jwtAuthFilter, UsernamePasswordAuthenticationFilter.class
