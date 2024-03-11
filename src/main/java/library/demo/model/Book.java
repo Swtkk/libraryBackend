@@ -55,7 +55,6 @@ public class Book {
 //        this.href = href;
         this.hasAudio = hasAudio;
         this.genre = genre;
-//        this.simpleThumb = simpleThumb;
         this.simpleThumb = simpleThumb;
 //        this.slug = slug;
 //        this.coverThumb = coverThumb;

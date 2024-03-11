@@ -31,7 +31,7 @@ public class UserEntity implements UserDetails {
     @Size(min = 5, max = 20)
     private String password;
     private String roles;
-
+    private List<Book> myFavorite;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return java.util.List.of(new SimpleGrantedAuthority(roles));

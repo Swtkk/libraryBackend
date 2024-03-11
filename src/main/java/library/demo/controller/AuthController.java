@@ -43,6 +43,10 @@ public class AuthController {
 
         return createUserRepository.findByEmail(email);
     }
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<UserEntity> getUserById(@PathVariable String userId){
+        return ResponseEntity.ok(userService.getUserById(userId));
+    }
 
     @PostMapping("/register")
     public ResponseEntity<ReqRes> createUser(@RequestBody ReqRes user) {

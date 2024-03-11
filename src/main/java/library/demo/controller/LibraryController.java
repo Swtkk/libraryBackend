@@ -44,7 +44,7 @@ public class LibraryController {
     }
 
     @PostMapping("/admin/add-book")
-    public Book createBook(@PathVariable Book book) throws AlreadyExistException{
+    public Book createBook(@RequestBody Book book) throws AlreadyExistException{
         return libraryService.addBook(book.getKind(),book.getTitle(),book.getAuthor(),book.getCover(),book.getEpoch(),book.isHasAudio(),book.getGenre(),book.getSimpleThumb());
     }
 
@@ -56,7 +56,7 @@ public class LibraryController {
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
 
-    @PostMapping("/{userId}/{bookId}")
+    @PostMapping("/user/{userId}/{bookId}")
     public void addFavoriteBook(@PathVariable String userId, @PathVariable String bookId){
         ObjectId objectUserId = new ObjectId(userId);
         Book book = libraryService.getBookById(bookId);
