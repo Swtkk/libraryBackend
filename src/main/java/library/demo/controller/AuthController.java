@@ -1,5 +1,6 @@
 package library.demo.controller;
 
+import jakarta.validation.Valid;
 import library.demo.model.ReqRes;
 import library.demo.model.UserEntity;
 import library.demo.service.AuthService;
@@ -49,7 +50,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ReqRes> createUser(@RequestBody ReqRes user) {
+    public ResponseEntity<ReqRes> createUser(@Valid @RequestBody ReqRes user) {
         return ResponseEntity.ok(authService.signUP(user));
     }
 

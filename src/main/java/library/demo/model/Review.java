@@ -21,15 +21,13 @@ public class Review {
     @Size(min = 5, max = 200, message = "Pole moze zawierac od 5 do 200 znakow")
     private String body;
     private LocalDate date;
-    private String userEmail;
-    private String bookId;
+    private String userName;
 
 
-    public Review(String body, LocalDate date, String userEmail, String bookId) {
+    public Review(String body, LocalDate date, String userName) {
         this.body = body;
         this.date = LocalDate.now();
-        this.userEmail = userEmail;
-        this.bookId = bookId;
+        this.userName = userName;
     }
 
 

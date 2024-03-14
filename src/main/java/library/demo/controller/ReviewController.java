@@ -1,6 +1,7 @@
 package library.demo.controller;
 
 
+import library.demo.model.Book;
 import library.demo.model.Review;
 import library.demo.service.LibraryService;
 import library.demo.service.ReviewService;
@@ -14,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/public")
 public class ReviewController {
     @Autowired
     private ReviewService reviewService;
@@ -22,18 +22,25 @@ public class ReviewController {
     @Autowired
     private LibraryService libraryService;
 
-    @GetMapping("/reviews/{bookId}")
+    @GetMapping("/public/user/{bookId}")
     public ResponseEntity<List<Review>> getReviewsForBook(@PathVariable String bookId) {
         List<Review> reviews = libraryService.getReviewsForBook(bookId);
         return ResponseEntity.ok(reviews);
 
     }
-
-    @PostMapping("/user/{bookId}")
+    @PostMapping("/user/review/{bookId}")
     public ResponseEntity<Review> addReviewToBook(@PathVariable String bookId, @RequestBody Review review) {
         ObjectId id = new ObjectId(bookId);
         Review createdReview = reviewService.addReviewToBook(review, id);
         return new ResponseEntity<>(createdReview, HttpStatus.CREATED);
     }
+    @DeleteMapping("/user/review/{bookId}/{reviewId}")
+    public void removeReviewFromBook(@PathVariable String bookId, @PathVariable String reviewId){
+        ObjectId objectBookId = new ObjectId(bookId);
+        Review review = reviewService.getReviewById(reviewId);
+        reviewService.removeReviewFromBook(objectBookId, review);
+        //do przetestowania
+    }
+
 
 }

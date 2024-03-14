@@ -3,9 +3,11 @@ package library.demo.controller;
 
 import library.demo.controller.Exceptions.AlreadyExistException;
 import library.demo.model.Book;
+import library.demo.model.Review;
 import library.demo.model.UserEntity;
 import library.demo.service.CreateUserRepository;
 import library.demo.service.LibraryService;
+import library.demo.service.ReviewService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +23,7 @@ public class LibraryController {
     @Autowired
     private LibraryService libraryService;
     @Autowired
-    private CreateUserRepository createUserRepository;
+    private ReviewService reviewService;
 
     @GetMapping("/public/books")
     public ResponseEntity<List<Book>> getAllBooks() {
@@ -62,13 +64,16 @@ public class LibraryController {
         Book book = libraryService.getBookById(bookId);
         libraryService.addBookToUser(objectUserId,book);
     }
+    @DeleteMapping("/user/{userId}/{bookId}")
+    public void removeFavoriteBook(@PathVariable String userId, @PathVariable String bookId){
+        ObjectId objectUserId = new ObjectId(userId);
+        Book book = libraryService.getBookById(bookId);
+        libraryService.removeBookFromUser(objectUserId, book);
+    }
 
-//    @PostMapping("/{bookId}")
-//    public ResponseEntity<Review> addReviewToBook(@PathVariable String bookId, @RequestBody Review review) {
-//        ObjectId id = new ObjectId(bookId);
-//        Review createdReview = reviewService.addReviewToBook(review, id);
-//        return new ResponseEntity<>(createdReview, HttpStatus.CREATED);
-//    }
+
+
+
     @GetMapping("/public/books/kind")
     public ResponseEntity<List<Book>> searchByKind(@RequestParam String kind) {
         List<Book> books = libraryService.searchByKind(kind);

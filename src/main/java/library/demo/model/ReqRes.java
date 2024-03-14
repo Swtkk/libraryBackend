@@ -2,6 +2,8 @@ package library.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.util.List;
@@ -17,8 +19,12 @@ public class ReqRes {
     private String message;
     private String refreshToken;
     private String expirationTime;
+    @NotNull(message = "Pole nie moze byc puste")
+    @Size(min = 5, max=30)
     private String email;
     private String role;
+    @NotNull(message = "Pole nie moze byc puste")
+    @Size(min = 5, max = 30)
     private String password;
     private UserEntity userEntity;
 }

@@ -55,8 +55,14 @@ public class LibraryService {
                 Query.query(Criteria.where("_id").is(userId)),
                 new Update().push("myFavorite", book), UserEntity.class
         );
-
     }
+    public void removeBookFromUser(ObjectId userId, Book book){
+        mongoTemplate.updateFirst(
+                Query.query(Criteria.where("_id").is(userId)),
+                new Update().pull("myFavorite", book), UserEntity.class
+        );
+    }
+
     public Book addBook(String kind, String title, String author,String cover,String epoch,boolean hasAudio, String genre,String simpleThumb) throws AlreadyExistException {
         if(libraryRepository.findByTitle(title) != null){
             throw new AlreadyExistException("Book with that title already exist");
