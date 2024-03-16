@@ -1,6 +1,7 @@
 package library.demo.controller;
 
 
+import jakarta.validation.Valid;
 import library.demo.model.Book;
 import library.demo.model.Review;
 import library.demo.service.LibraryService;
@@ -29,7 +30,7 @@ public class ReviewController {
 
     }
     @PostMapping("/user/review/{bookId}")
-    public ResponseEntity<Review> addReviewToBook(@PathVariable String bookId, @RequestBody Review review) {
+    public ResponseEntity<Review> addReviewToBook(@PathVariable String bookId,@Valid @RequestBody Review review) {
         ObjectId id = new ObjectId(bookId);
         Review createdReview = reviewService.addReviewToBook(review, id);
         return new ResponseEntity<>(createdReview, HttpStatus.CREATED);
@@ -39,7 +40,6 @@ public class ReviewController {
         ObjectId objectBookId = new ObjectId(bookId);
         Review review = reviewService.getReviewById(reviewId);
         reviewService.removeReviewFromBook(objectBookId, review);
-        //do przetestowania
     }
 
 

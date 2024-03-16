@@ -1,5 +1,6 @@
 package library.demo.model;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Review {
     @Id
-    private ObjectId id;
+    private String id;
     @NotNull
     @Size(min = 5, max = 200, message = "Pole moze zawierac od 5 do 200 znakow")
     private String body;
@@ -24,7 +25,8 @@ public class Review {
     private String userName;
 
 
-    public Review(String body, LocalDate date, String userName) {
+    public Review(ObjectId id,String body, LocalDate date, String userName) {
+        this.id = id.toHexString();
         this.body = body;
         this.date = LocalDate.now();
         this.userName = userName;
