@@ -14,7 +14,7 @@
     <name>demo</name>
     <description>Library Project</description>
     <properties>
-        <java.version>20</java.version>
+        <java.version>17</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -89,9 +89,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>20</source>
-                    <target>20</target>
-                    <release>20</release>
+                    <source>17</source>
+                    <target>17</target>
+                    <release>17</release>
                     <compilerArgs>
                     </compilerArgs>
                 </configuration>
