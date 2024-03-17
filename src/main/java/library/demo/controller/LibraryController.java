@@ -3,11 +3,7 @@ package library.demo.controller;
 
 import library.demo.controller.Exceptions.AlreadyExistException;
 import library.demo.model.Book;
-import library.demo.model.Review;
-import library.demo.model.UserEntity;
-import library.demo.service.CreateUserRepository;
 import library.demo.service.LibraryService;
-import library.demo.service.ReviewService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,15 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class LibraryController {
 
     @Autowired
     private LibraryService libraryService;
-    @Autowired
-    private ReviewService reviewService;
 
     @GetMapping("/public/books")
     public ResponseEntity<List<Book>> getAllBooks() {
@@ -51,12 +44,6 @@ public class LibraryController {
     }
 
 
-    //wyszukiwanie po tytule
-    @GetMapping("/public/books/search")
-    public ResponseEntity<List<Book>> searchByTitle(@RequestParam String title) {
-        List<Book> books = libraryService.searchBooksByTitle(title);
-        return new ResponseEntity<>(books, HttpStatus.OK);
-    }
 
     @PostMapping("/user/{userId}/{bookId}")
     public void addFavoriteBook(@PathVariable String userId, @PathVariable String bookId){
@@ -71,12 +58,15 @@ public class LibraryController {
         libraryService.removeBookFromUser(objectUserId, book);
     }
 
-
-
-
     @GetMapping("/public/books/kind")
     public ResponseEntity<List<Book>> searchByKind(@RequestParam String kind) {
         List<Book> books = libraryService.searchByKind(kind);
+        return new ResponseEntity<>(books, HttpStatus.OK);
+    }
+    //wyszukiwanie po tytule
+    @GetMapping("/public/books/search")
+    public ResponseEntity<List<Book>> searchByTitle(@RequestParam String title) {
+        List<Book> books = libraryService.searchBooksByTitle(title);
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
 }

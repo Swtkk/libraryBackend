@@ -16,7 +16,6 @@ import java.util.List;
 @Data
 @Document(collection = "books")
 public class Book {
-    //    private int id;
     @Id
     private String id;
     private String kind;
@@ -26,6 +25,7 @@ public class Book {
     private String title;
     private String url;
     private String coverColor;
+    @NotNull
     private String author;
     private String cover;
     private String epoch;
@@ -45,18 +45,12 @@ public class Book {
     public Book(ObjectId id, String kind, String title, String author, String cover, String epoch, boolean hasAudio, String genre, String simpleThumb) {
         this.id = id.toHexString();
         this.kind = kind;
-//        this.fullSortKey = fullSortKey;
         this.title = title;
-//        this.url = url;
-//        this.coverColor = coverColor;
         this.author = author;
         this.cover = cover;
         this.epoch = epoch;
-//        this.href = href;
         this.hasAudio = hasAudio;
         this.genre = genre;
         this.simpleThumb = simpleThumb;
-//        this.slug = slug;
-//        this.coverThumb = coverThumb;
     }
 }

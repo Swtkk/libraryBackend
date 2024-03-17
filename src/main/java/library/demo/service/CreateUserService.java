@@ -2,13 +2,11 @@ package library.demo.service;
 
 
 import library.demo.controller.Exceptions.NotFoundException;
-import library.demo.model.Book;
 import library.demo.model.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

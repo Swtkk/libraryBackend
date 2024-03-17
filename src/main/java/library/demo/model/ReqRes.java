@@ -20,11 +20,9 @@ public class ReqRes {
     private String refreshToken;
     private String expirationTime;
     @NotNull(message = "Pole nie moze byc puste")
-    @Size(min = 5, max=30)
     private String email;
     private String role;
     @NotNull(message = "Pole nie moze byc puste")
-    @Size(min = 5, max = 30)
     private String password;
     private UserEntity userEntity;
 }

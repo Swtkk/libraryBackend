@@ -14,8 +14,6 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -111,34 +109,12 @@ public class LibraryService {
         }
     }
 
-
     public List<Book> searchBooksByTitle(String title) {
         Query query = new Query(Criteria.where("title").regex(title, "i"));
         return mongoTemplate.find(query, Book.class);
     }
     public List<Book> searchByKind(String kind){
-        Query query = new Query(Criteria.where("").regex(kind,"i"));
+        Query query = new Query(Criteria.where("kind").regex(kind,"i"));
         return mongoTemplate.find(query, Book.class);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
